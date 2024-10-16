@@ -24,10 +24,10 @@ body {
 
 .settings-modal {
     display: none;
-    position: fixed;
-    top: 20%;
-    left: 50%;
-    transform: translate(-50%, -20%);
+    position: absolute;
+    top: 40px;
+    left: 7%;
+    width: 76%;
     background-color: #333;
     padding: 20px;
     border-radius: 10px;
@@ -115,10 +115,4 @@ body {
 
 .save-btn:hover {
     background-color: #45a049;
-}
-
-@media (max-width: 600px) {
-    .settings-modal {
-        width: 90%;
-    }
 }
