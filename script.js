@@ -125,6 +125,82 @@ resetAllBtn.addEventListener('click', () => {
     });
 });
 
-// 初始化
-loadSettings();
-renderSections();
+// UTF-8 to Base64 URL Encode
+function base64UrlEncode(str) {
+    return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (match, p1) => {
+        return String.fromCharCode('0x' + p1);
+    }))
+        .replace(/\+/g, '-')
+        .replace(/\//g, '_')
+        .replace(/=+$/, '');
+}
+
+// Base64 URL Decode to UTF-8
+function base64UrlDecode(str) {
+    str = str
+        .replace(/-/g, '+')
+        .replace(/_/g, '/');
+    const decoded = atob(str);
+    return decodeURIComponent(decoded.split('').map(c => {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+}
+
+// 解析 URL 中的 settings 參數
+function getSettingsFromUrl() {
+    const params = new URLSearchParams(window.location.search);
+    const settings = params.get('settings');
+    if (settings) {
+        try {
+            const decodedSettings = JSON.parse(base64UrlDecode(settings));
+            return decodedSettings;
+        } catch (e) {
+            console.error("無法解析設定:", e);
+        }
+    }
+    return null;
+}
+
+// 初始化時檢查 URL 參數並套用
+function applySettingsFromUrl() {
+    const settings = getSettingsFromUrl();
+    if (settings) {
+        if (settings.titles) {
+            titleListTextarea.value = settings.titles.join('\n');
+        }
+        if (settings.buttons) {
+            buttonListTextarea.value = settings.buttons.join('\n');
+        }
+        renderSections();
+    }
+}
+
+// 更新 URL 參數
+function updateUrlWithSettings() {
+    const settings = {
+        titles: titleListTextarea.value.split('\n').filter(title => title.trim() !== ''),
+        buttons: buttonListTextarea.value.split('\n').filter(button => button.trim() !== '')
+    };
+    const encodedSettings = base64UrlEncode(JSON.stringify(settings));
+    const newUrl = `${window.location.pathname}?settings=${encodedSettings}`;
+    window.history.replaceState(null, '', newUrl);
+}
+
+// 修改保存設定的事件處理函數
+document.getElementById('save-settings').addEventListener('click', () => {
+    const titles = titleListTextarea.value;
+    const buttons = buttonListTextarea.value;
+    localStorage.setItem('titles', titles);
+    localStorage.setItem('buttons', buttons);
+    updateUrlWithSettings(); // 更新 URL
+    renderSections();
+    settingsModal.style.display = 'none';
+    settingsOverlay.style.display = 'none';
+});
+
+// 加入 applySettingsFromUrl 到頁面初始化
+window.addEventListener('DOMContentLoaded', () => {
+    loadSettings();
+    applySettingsFromUrl();
+    renderSections();
+});
