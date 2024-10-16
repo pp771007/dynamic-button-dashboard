@@ -1,119 +1,14 @@
 <!DOCTYPE html>
 <html lang="zh-TW">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>動態按鈕控制板</title>
-	<link rel="icon" href="favicon.png">
-    <style>
-        body {
-            margin: 0;
-            font-family: Arial, sans-serif;
-            background-color: #1e1e1e;
-            color: #ffffff;
-        }
-
-        .container {
-            padding: 20px;
-			padding-top: 60px;
-        }
-
-        .settings-btn {
-            position: fixed;
-            top: 10px;
-            left: 10px;
-            background-color: #555;
-            border: none;
-            padding: 10px;
-            border-radius: 5px;
-            color: #fff;
-            cursor: pointer;
-        }
-
-        .settings-modal {
-            display: none;
-            position: fixed;
-            top: 20%;
-            left: 50%;
-            transform: translate(-50%, -20%);
-            background-color: #333;
-            padding: 20px;
-            border-radius: 10px;
-            z-index: 100;
-        }
-
-        .settings-modal textarea {
-            width: 100%;
-            height: 100px;
-            margin-bottom: 10px;
-            background-color: #444;
-            color: #fff;
-            border: 1px solid #777;
-        }
-
-        .settings-overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0, 0, 0, 0.5);
-            z-index: 99;
-        }
-
-        .section {
-            margin-bottom: 20px;
-            border: 1px solid #777;
-            padding: 10px;
-            border-radius: 5px;
-        }
-
-        .section-header {
-            display: flex;
-            justify-content: space-between; /* 讓標題與重置按鈕分開 */
-            align-items: center;
-            margin-bottom: 10px;
-        }
-
-        .button {
-            background-color: #fff;
-            color: #000;
-            padding: 10px;
-            border-radius: 5px;
-            margin: 5px;
-            border: none;
-            cursor: pointer;
-        }
-
-        .reset-btn {
-            background-color: #ff5252;
-            padding: 5px 15px;
-            border-radius: 5px;
-            border: none;
-            color: white;
-            cursor: pointer;
-        }
-
-        .reset-all-btn {
-            background-color: #ff5252;
-            padding: 10px;
-            border-radius: 5px;
-            color: white;
-            position: fixed;
-            top: 10px;
-            right: 10px;
-            border: none;
-            cursor: pointer;
-        }
-
-        @media (max-width: 600px) {
-            .settings-modal {
-                width: 90%;
-            }
-        }
-    </style>
+    <link rel="icon" href="favicon.png">
+    <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
 
     <button class="settings-btn">⚙️ 設定</button>
@@ -124,127 +19,13 @@
         <textarea id="title-list"></textarea>
         <label>按鈕列表：</label>
         <textarea id="button-list"></textarea>
-        <button id="save-settings">儲存設定</button>
+        <button id="save-settings" class="save-btn">儲存設定</button>
     </div>
 
     <div class="container" id="main-content"></div>
     <button class="reset-all-btn" id="reset-all">全部重置</button>
 
-    <script>
-        // 取得元素
-        const settingsBtn = document.querySelector('.settings-btn');
-        const settingsModal = document.querySelector('.settings-modal');
-        const settingsOverlay = document.querySelector('.settings-overlay');
-        const titleListTextarea = document.getElementById('title-list');
-        const buttonListTextarea = document.getElementById('button-list');
-        const mainContent = document.getElementById('main-content');
-        const resetAllBtn = document.getElementById('reset-all');
-
-        // 顯示設定頁
-        settingsBtn.addEventListener('click', () => {
-            settingsModal.style.display = 'block';
-            settingsOverlay.style.display = 'block';
-        });
-
-        // 關閉設定頁
-        settingsOverlay.addEventListener('click', () => {
-            settingsModal.style.display = 'none';
-            settingsOverlay.style.display = 'none';
-        });
-
-        // 讀取 localStorage 資料
-        function loadSettings() {
-            const savedTitles = localStorage.getItem('titles');
-            const savedButtons = localStorage.getItem('buttons');
-            if (savedTitles) titleListTextarea.value = savedTitles;
-            if (savedButtons) buttonListTextarea.value = savedButtons;
-        }
-
-        // 儲存設定到 localStorage
-        document.getElementById('save-settings').addEventListener('click', () => {
-            const titles = titleListTextarea.value;
-            const buttons = buttonListTextarea.value;
-            localStorage.setItem('titles', titles);
-            localStorage.setItem('buttons', buttons);
-            renderSections();
-            settingsModal.style.display = 'none';
-            settingsOverlay.style.display = 'none';
-        });
-
-        // 建立分區和按鈕
-        function renderSections() {
-            mainContent.innerHTML = ''; // 清除現有內容
-            const titles = titleListTextarea.value.split('\n').filter(title => title.trim() !== '');
-            const buttons = buttonListTextarea.value.split('\n').filter(button => button.trim() !== '');
-
-            titles.forEach((title, sectionIndex) => {
-                const sectionDiv = document.createElement('div');
-                sectionDiv.classList.add('section');
-
-                // 標題與重置按鈕
-                const sectionHeader = document.createElement('div');
-                sectionHeader.classList.add('section-header');
-                sectionHeader.innerHTML = `<h3>${title}</h3>`;
-
-                const resetBtn = document.createElement('button');
-                resetBtn.classList.add('reset-btn');
-                resetBtn.textContent = '重置';
-                resetBtn.addEventListener('click', () => {
-                    sectionDiv.querySelectorAll('.button').forEach((btn) => {
-                        btn.style.backgroundColor = '#fff';
-                        btn.style.color = '#000';
-                        localStorage.setItem(`button_${btn.dataset.section}_${btn.dataset.index}`, '#fff');
-                    });
-                });
-
-                sectionHeader.appendChild(resetBtn);
-                sectionDiv.appendChild(sectionHeader);
-
-                buttons.forEach((buttonText, buttonIndex) => {
-                    const button = document.createElement('button');
-                    button.classList.add('button');
-                    button.textContent = buttonText;
-                    button.dataset.section = sectionIndex;
-                    button.dataset.index = buttonIndex;
-
-                    // 初始顏色
-                    const savedColor = localStorage.getItem(`button_${sectionIndex}_${buttonIndex}`);
-                    if (savedColor) {
-                        button.style.backgroundColor = savedColor;
-                        button.style.color = savedColor === '#fff' ? '#000' : '#fff';
-                    }
-
-                    // 切換顏色
-                    button.addEventListener('click', () => {
-                        if (button.style.backgroundColor === 'green') {
-                            button.style.backgroundColor = '#fff';
-                            button.style.color = '#000';
-                        } else {
-                            button.style.backgroundColor = 'green';
-                            button.style.color = '#fff';
-                        }
-                        localStorage.setItem(`button_${sectionIndex}_${buttonIndex}`, button.style.backgroundColor);
-                    });
-
-                    sectionDiv.appendChild(button);
-                });
-
-                mainContent.appendChild(sectionDiv);
-            });
-        }
-
-        // 全部分區重置
-        resetAllBtn.addEventListener('click', () => {
-            document.querySelectorAll('.button').forEach(button => {
-                button.style.backgroundColor = '#fff';
-                button.style.color = '#000';
-                localStorage.setItem(`button_${button.dataset.section}_${button.dataset.index}`, '#fff');
-            });
-        });
-
-        // 初始化
-        loadSettings();
-        renderSections();
-    </script>
+    <script src="script.js"></script>
 </body>
+
 </html>
