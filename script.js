@@ -124,7 +124,6 @@ resetAllBtn.addEventListener('click', () => {
         localStorage.removeItem(`button_${button.dataset.section}_${button.dataset.index}`);
     });
 });
-
 // UTF-8 to Base64 URL Encode
 function base64UrlEncode(str) {
     return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (match, p1) => {
@@ -161,29 +160,42 @@ function getSettingsFromUrl() {
     return null;
 }
 
-// 初始化時檢查 URL 參數並套用
+// 初始化時檢查 URL 參數並套用，然後刪除參數
 function applySettingsFromUrl() {
     const settings = getSettingsFromUrl();
     if (settings) {
         if (settings.titles) {
             titleListTextarea.value = settings.titles.join('\n');
+            localStorage.setItem('titles', settings.titles.join('\n')); // 保存到 localStorage
         }
         if (settings.buttons) {
             buttonListTextarea.value = settings.buttons.join('\n');
+            localStorage.setItem('buttons', settings.buttons.join('\n')); // 保存到 localStorage
         }
         renderSections();
+
+        // 移除 URL 中的 settings 參數
+        const params = new URLSearchParams(window.location.search);
+        params.delete('settings');
+        window.history.replaceState(null, '', `${window.location.pathname}?${params.toString()}`);
     }
 }
 
-// 更新 URL 參數
-function updateUrlWithSettings() {
+// 複製含設定的網址到剪貼簿
+function copySettingsUrl() {
     const settings = {
         titles: titleListTextarea.value.split('\n').filter(title => title.trim() !== ''),
         buttons: buttonListTextarea.value.split('\n').filter(button => button.trim() !== '')
     };
     const encodedSettings = base64UrlEncode(JSON.stringify(settings));
-    const newUrl = `${window.location.pathname}?settings=${encodedSettings}`;
-    window.history.replaceState(null, '', newUrl);
+    const settingsUrl = `${window.location.origin}${window.location.pathname}?settings=${encodedSettings}`;
+
+    // 將 URL 複製到剪貼簿
+    navigator.clipboard.writeText(settingsUrl).then(() => {
+        alert("設定網址已複製到剪貼簿！");
+    }).catch(err => {
+        console.error("複製失敗: ", err);
+    });
 }
 
 // 修改保存設定的事件處理函數
@@ -192,10 +204,14 @@ document.getElementById('save-settings').addEventListener('click', () => {
     const buttons = buttonListTextarea.value;
     localStorage.setItem('titles', titles);
     localStorage.setItem('buttons', buttons);
-    updateUrlWithSettings(); // 更新 URL
     renderSections();
     settingsModal.style.display = 'none';
     settingsOverlay.style.display = 'none';
+});
+
+// 綁定複製按鈕的事件
+document.getElementById('copy-url').addEventListener('click', () => {
+    copySettingsUrl();
 });
 
 // 加入 applySettingsFromUrl 到頁面初始化
