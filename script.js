@@ -6,6 +6,7 @@ const titleListTextarea = document.getElementById('title-list');
 const buttonListTextarea = document.getElementById('button-list');
 const mainContent = document.getElementById('main-content');
 const resetAllBtn = document.getElementById('reset-all');
+const autoSaveTextarea = document.getElementById('autosave-textarea');
 
 // 自動調整 textarea 高度
 function autoResizeTextarea(textarea) {
@@ -33,14 +34,11 @@ settingsOverlay.addEventListener('click', () => {
 
 // 讀取 localStorage 資料
 function loadSettings() {
-    const savedTitles = localStorage.getItem('titles');
-    const savedButtons = localStorage.getItem('buttons');
-    if (savedTitles) {
-        titleListTextarea.value = savedTitles;
-    }
-    if (savedButtons) {
-        buttonListTextarea.value = savedButtons;
-    }
+    titleListTextarea.value = localStorage.getItem('titles') || '';
+    buttonListTextarea.value = localStorage.getItem('buttons') || '';
+    autoSaveTextarea.value = localStorage.getItem('autosave-text') || '';
+
+    autoResizeTextarea(autoSaveTextarea); // 調整高度
 }
 
 // 儲存設定到 localStorage
@@ -71,7 +69,7 @@ function renderSections() {
 
         const resetBtn = document.createElement('button');
         resetBtn.classList.add('reset-btn');
-        resetBtn.textContent = '重置';
+        resetBtn.textContent = '♻️ 重置';
         resetBtn.addEventListener('click', () => {
             sectionDiv.querySelectorAll('.button').forEach((btn) => {
                 btn.style.backgroundColor = '#fff';
@@ -213,6 +211,12 @@ document.getElementById('save-settings').addEventListener('click', () => {
 // 綁定複製按鈕的事件
 document.getElementById('copy-url').addEventListener('click', () => {
     copySettingsUrl();
+});
+
+// 變更時自動儲存到 localStorage
+autoSaveTextarea.addEventListener('input', () => {
+    localStorage.setItem('autosave-text', autoSaveTextarea.value);
+    autoResizeTextarea(autoSaveTextarea);
 });
 
 // 加入 applySettingsFromUrl 到頁面初始化

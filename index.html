@@ -20,21 +20,24 @@
 </head>
 
 <body>
-
     <button class="settings-btn">⚙️ 設定</button>
+    <button class="reset-all-btn" id="reset-all">🔄 全部重置</button>
+
     <div class="settings-overlay"></div>
     <div class="settings-modal">
-        <button id="copy-url" class="copy-url-btn">複製設定網址</button>
-        <h2>設定頁面</h2>
-        <label>標題列表：</label>
+        <button id="copy-url" class="copy-url-btn">🔗 複製設定網址</button>
+        <h2>⚙️設定頁面</h2>
+        <label>🏷️ 標題列表：</label>
         <textarea id="title-list"></textarea>
-        <label>按鈕列表：</label>
+        <label>🔘 按鈕列表：</label>
         <textarea id="button-list"></textarea>
-        <button id="save-settings" class="save-btn">儲存設定</button>
+        <button id="save-settings" class="save-btn">💾 儲存設定</button>
     </div>
-
-    <div class="container" id="main-content"></div>
-    <button class="reset-all-btn" id="reset-all">全部重置</button>
+    <div class="container top-padding" id="main-content"></div>
+    <div class="container">
+        <label>🗒️ 記事本：</label>
+        <textarea id="autosave-textarea"></textarea>
+    </div>
 
     <script src="script.js?3"></script>
 </body>
