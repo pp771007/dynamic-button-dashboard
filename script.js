@@ -124,6 +124,7 @@ resetAllBtn.addEventListener('click', () => {
         localStorage.removeItem(`button_${button.dataset.section}_${button.dataset.index}`);
     });
 });
+
 // UTF-8 to Base64 URL Encode
 function base64UrlEncode(str) {
     return btoa(encodeURIComponent(str).replace(/%([0-9A-F]{2})/g, (match, p1) => {
@@ -166,11 +167,9 @@ function applySettingsFromUrl() {
     if (settings) {
         if (settings.titles) {
             titleListTextarea.value = settings.titles.join('\n');
-            localStorage.setItem('titles', settings.titles.join('\n')); // 保存到 localStorage
         }
         if (settings.buttons) {
             buttonListTextarea.value = settings.buttons.join('\n');
-            localStorage.setItem('buttons', settings.buttons.join('\n')); // 保存到 localStorage
         }
         renderSections();
 
@@ -178,6 +177,8 @@ function applySettingsFromUrl() {
         const params = new URLSearchParams(window.location.search);
         params.delete('settings');
         window.history.replaceState(null, '', `${window.location.pathname}?${params.toString()}`);
+
+        alert("已套用設定，如要保留此設定請進入設定頁儲存");
     }
 }
 
