@@ -1,7 +1,7 @@
 # 使用說明：動態按鈕控制板
 
 ## 網址
-［連結］（https://pp771007.github.io/dynamic-button-dashboard/)
+[連結](https://pp771007.github.io/dynamic-button-dashboard/)
 
 ## 概述
 這個網頁提供了一個動態按鈕控制面板，使用者可以自定義按鈕和標題，並能夠通過按鈕的點擊來切換顏色。此外，使用者還可以重置單個分區的按鈕顏色，或重置所有分區的按鈕顏色。
