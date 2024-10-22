@@ -1,12 +1,17 @@
+// 常數
+const defaultPageTitle = '動態按鈕控制板';
+
 // 取得元素
 const settingsBtn = document.querySelector('.settings-btn');
 const settingsModal = document.querySelector('.settings-modal');
 const settingsOverlay = document.querySelector('.settings-overlay');
+const pageTitleInput = document.getElementById('page-title-input');
 const titleListTextarea = document.getElementById('title-list');
 const buttonListTextarea = document.getElementById('button-list');
 const mainContent = document.getElementById('main-content');
 const resetAllBtn = document.getElementById('reset-all');
 const autoSaveTextarea = document.getElementById('autosave-textarea');
+
 
 // 自動調整 textarea 高度
 function autoResizeTextarea(textarea) {
@@ -56,6 +61,9 @@ window.addEventListener('popstate', () => {
 
 // 讀取 localStorage 資料
 function loadSettings() {
+    pageTitleInput.value = localStorage.getItem('dynamic-button-dashboard-head-title') || defaultPageTitle;
+    document.title = pageTitleInput.value;
+
     titleListTextarea.value = localStorage.getItem('titles') || '';
     buttonListTextarea.value = localStorage.getItem('buttons') || '';
     autoSaveTextarea.value = localStorage.getItem('autosave-text') || '';
@@ -65,10 +73,22 @@ function loadSettings() {
 
 // 儲存設定到 localStorage
 document.getElementById('save-settings').addEventListener('click', () => {
+    if (!pageTitleInput.value.trim()) {
+        pageTitleInput.value = defaultPageTitle;
+    }
+    const pageTitle = pageTitleInput.value;
     const titles = titleListTextarea.value;
     const buttons = buttonListTextarea.value;
+
     localStorage.setItem('titles', titles);
     localStorage.setItem('buttons', buttons);
+    localStorage.setItem('dynamic-button-dashboard-head-title', pageTitle);
+
+    // 強制更新網頁標題（兼容某些情況下瀏覽器不立即更新的問題）
+    setTimeout(() => {
+        document.title = pageTitle;
+    }, 10);
+
     renderSections();
     closeSettings();
 });
@@ -176,6 +196,10 @@ function getSettingsFromUrl() {
 function applySettingsFromUrl() {
     const settings = getSettingsFromUrl();
     if (settings) {
+        if (settings.pageTitle) {
+            pageTitleInput.value = settings.pageTitle;
+            document.title = settings.pageTitle;
+        }
         if (settings.titles) {
             titleListTextarea.value = settings.titles.join('\n');
         }
@@ -231,7 +255,7 @@ autoSaveTextarea.addEventListener('input', () => {
     autoResizeTextarea(autoSaveTextarea);
 });
 
-// 加入 applySettingsFromUrl 到頁面初始化
+// 頁面初始化
 window.addEventListener('DOMContentLoaded', () => {
     loadSettings();
     applySettingsFromUrl();
