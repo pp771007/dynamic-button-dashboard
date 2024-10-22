@@ -71,8 +71,13 @@ function loadSettings() {
     autoResizeTextarea(autoSaveTextarea); // 調整高度
 }
 
-// 儲存設定到 localStorage
+// 監聽 save-settings 按鈕
 document.getElementById('save-settings').addEventListener('click', () => {
+    saveSettings()
+});
+
+// 儲存設定到 localStorage
+function saveSettings() {
     if (!pageTitleInput.value.trim()) {
         pageTitleInput.value = defaultPageTitle;
     }
@@ -91,7 +96,7 @@ document.getElementById('save-settings').addEventListener('click', () => {
 
     renderSections();
     closeSettings();
-});
+}
 
 // 建立分區和按鈕
 function renderSections() {
@@ -233,16 +238,6 @@ function copySettingsUrl() {
         console.error("複製失敗: ", err);
     });
 }
-
-// 修改保存設定的事件處理函數
-document.getElementById('save-settings').addEventListener('click', () => {
-    const titles = titleListTextarea.value;
-    const buttons = buttonListTextarea.value;
-    localStorage.setItem('titles', titles);
-    localStorage.setItem('buttons', buttons);
-    renderSections();
-    closeSettings();
-});
 
 // 綁定複製按鈕的事件
 document.getElementById('copy-url').addEventListener('click', () => {
