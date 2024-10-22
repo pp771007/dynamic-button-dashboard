@@ -70,8 +70,7 @@ document.getElementById('save-settings').addEventListener('click', () => {
     localStorage.setItem('titles', titles);
     localStorage.setItem('buttons', buttons);
     renderSections();
-    settingsModal.style.display = 'none';
-    settingsOverlay.style.display = 'none';
+    closeSettings();
 });
 
 // 建立分區和按鈕
@@ -94,8 +93,7 @@ function renderSections() {
         resetBtn.textContent = '♻️ 重置';
         resetBtn.addEventListener('click', () => {
             sectionDiv.querySelectorAll('.button').forEach((btn) => {
-                btn.style.backgroundColor = '#fff';
-                btn.style.color = '#000';
+                btn.classList.remove('button-active');
                 localStorage.removeItem(`button_${btn.dataset.section}_${btn.dataset.index}`);
             });
         });
@@ -110,23 +108,17 @@ function renderSections() {
             button.dataset.section = sectionIndex;
             button.dataset.index = buttonIndex;
 
-            // 初始顏色
-            const savedColor = localStorage.getItem(`button_${sectionIndex}_${buttonIndex}`);
-            if (savedColor) {
-                button.style.backgroundColor = savedColor;
-                button.style.color = savedColor === '#fff' ? '#000' : '#fff';
+            // 初始狀態
+            const isActive = localStorage.getItem(`button_${sectionIndex}_${buttonIndex}`) === 'true';
+            if (isActive) {
+                button.classList.add('button-active');
             }
 
-            // 切換顏色
+            // 切換狀態
             button.addEventListener('click', () => {
-                if (button.style.backgroundColor === 'green') {
-                    button.style.backgroundColor = '#fff';
-                    button.style.color = '#000';
-                } else {
-                    button.style.backgroundColor = 'green';
-                    button.style.color = '#fff';
-                }
-                localStorage.setItem(`button_${sectionIndex}_${buttonIndex}`, button.style.backgroundColor);
+                button.classList.toggle('button-active');
+                const activeState = button.classList.contains('button-active');
+                localStorage.setItem(`button_${sectionIndex}_${buttonIndex}`, activeState);
             });
 
             sectionDiv.appendChild(button);
@@ -139,8 +131,7 @@ function renderSections() {
 // 全部分區重置
 resetAllBtn.addEventListener('click', () => {
     document.querySelectorAll('.button').forEach(button => {
-        button.style.backgroundColor = '#fff';
-        button.style.color = '#000';
+        button.classList.remove('button-active');
         localStorage.removeItem(`button_${button.dataset.section}_${button.dataset.index}`);
     });
 });
@@ -226,8 +217,7 @@ document.getElementById('save-settings').addEventListener('click', () => {
     localStorage.setItem('titles', titles);
     localStorage.setItem('buttons', buttons);
     renderSections();
-    settingsModal.style.display = 'none';
-    settingsOverlay.style.display = 'none';
+    closeSettings();
 });
 
 // 綁定複製按鈕的事件
@@ -235,7 +225,7 @@ document.getElementById('copy-url').addEventListener('click', () => {
     copySettingsUrl();
 });
 
-// 變更時自動儲存到 localStorage
+// autoSaveTextarea 變更時自動儲存到 localStorage
 autoSaveTextarea.addEventListener('input', () => {
     localStorage.setItem('autosave-text', autoSaveTextarea.value);
     autoResizeTextarea(autoSaveTextarea);

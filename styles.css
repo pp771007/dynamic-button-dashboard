@@ -87,6 +87,11 @@ textarea {
     cursor: pointer;
 }
 
+.button-active {
+    background-color: green;
+    color: #fff;
+}
+
 .reset-btn {
     background-color: #ff5252;
     padding: 5px 15px;
