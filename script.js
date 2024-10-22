@@ -24,12 +24,34 @@ settingsBtn.addEventListener('click', () => {
     settingsOverlay.style.display = 'block';
     autoResizeTextarea(titleListTextarea); // 調整高度
     autoResizeTextarea(buttonListTextarea); // 調整高度
+
+    // 新增推送狀態
+    history.pushState({ modalOpen: true }, '', '#settings');
 });
 
 // 關閉設定頁
-settingsOverlay.addEventListener('click', () => {
+function closeSettings() {
     settingsModal.style.display = 'none';
     settingsOverlay.style.display = 'none';
+
+    // 返回上一個歷史狀態
+    if (window.location.hash === '#settings') {
+        history.back();
+    }
+}
+
+settingsOverlay.addEventListener('click', closeSettings);
+
+// 監聽 ESC 鍵盤事件來關閉設定頁
+document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape') { // 如果按下的是 ESC 鍵
+        closeSettings();
+    }
+});
+
+// 監聽 Android 返回按鈕
+window.addEventListener('popstate', () => {
+    closeSettings();
 });
 
 // 讀取 localStorage 資料
