@@ -25,6 +25,15 @@ body {
     cursor: pointer;
 }
 
+.settings-btn:hover {
+    background-color: #666;
+}
+
+.settings-btn:active {
+    background-color: #444;
+    transform: scale(0.98);
+}
+
 .settings-modal {
     display: none;
     position: absolute;
@@ -88,6 +97,10 @@ textarea {
     margin-bottom: 10px;
 }
 
+button {
+    transition: background-color 0.3s, color 0.3s, transform 0.1s;
+}
+
 .button {
     background-color: #fff;
     color: #000;
@@ -98,8 +111,22 @@ textarea {
     cursor: pointer;
 }
 
+.button:hover {
+    background-color: #93ff85;
+}
+
+.button:active {
+    background-color: #e0e0e0;
+    transform: scale(0.98);
+}
+
 .button-active {
     background-color: green;
+    color: #fff;
+}
+
+.button-active:hover {
+    background-color: #004600;
     color: #fff;
 }
 
@@ -110,6 +137,15 @@ textarea {
     border: none;
     color: white;
     cursor: pointer;
+}
+
+.reset-btn:hover {
+    background-color: #ff6e6e;
+}
+
+.reset-btn:active {
+    background-color: #cc0000;
+    transform: scale(0.98);
 }
 
 .reset-all-btn {
@@ -124,6 +160,15 @@ textarea {
     cursor: pointer;
 }
 
+.reset-all-btn:hover {
+    background-color: #ff6e6e;
+}
+
+.reset-all-btn:active {
+    background-color: #cc0000;
+    transform: scale(0.98);
+}
+
 .save-btn {
     background-color: #4CAF50;
     color: #fff;
@@ -131,12 +176,16 @@ textarea {
     border-radius: 5px;
     border: none;
     cursor: pointer;
-    transition: background-color 0.3s;
     width: 100%;
 }
 
 .save-btn:hover {
     background-color: #45a049;
+}
+
+.save-btn:active {
+    background-color: #3e8e41;
+    transform: scale(0.98);
 }
 
 .copy-url-btn {
@@ -146,7 +195,6 @@ textarea {
     border-radius: 5px;
     border: none;
     cursor: pointer;
-    transition: background-color 0.3s;
     margin-top: 10px;
     right: 20px;
     position: absolute;
@@ -155,4 +203,9 @@ textarea {
 
 .copy-url-btn:hover {
     background-color: #2980b9;
+}
+
+.copy-url-btn:active {
+    background-color: #2471a3;
+    transform: scale(0.98);
 }
