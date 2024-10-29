@@ -11,7 +11,8 @@ const buttonListTextarea = document.getElementById('button-list');
 const mainContent = document.getElementById('main-content');
 const resetAllBtn = document.getElementById('reset-all');
 const autoSaveTextarea = document.getElementById('autosave-textarea');
-
+const expressionInput = document.getElementById('expressionInput');
+const calculationResult = document.getElementById('calculationResult');
 
 // 自動調整 textarea 高度
 function autoResizeTextarea(textarea) {
@@ -248,6 +249,29 @@ document.getElementById('copy-url').addEventListener('click', () => {
 autoSaveTextarea.addEventListener('input', () => {
     localStorage.setItem('autosave-text', autoSaveTextarea.value);
     autoResizeTextarea(autoSaveTextarea);
+});
+
+// 設置監聽器，當輸入框內容改變時觸發函數
+expressionInput.addEventListener('input', () => {
+    // 取得輸入框的內容
+    const expression = expressionInput.value;
+
+    // 使用正則表達式檢查輸入是否合法（僅允許數字、基本運算符、小數點、括號和空格）
+    if (/^[0-9+\-*/.() ]*$/.test(expression)) {
+        try {
+            // 使用 eval 計算輸入的數學表達式
+            const result = eval(expression);
+
+            // 檢查計算結果是否為有效數字，無效則顯示「無效」，否則顯示結果
+            calculationResult.textContent = isNaN(result) ? '無效' : result;
+        } catch (error) {
+            // 如果 eval 期間發生錯誤，顯示「錯誤」
+            calculationResult.textContent = '錯誤';
+        }
+    } else {
+        // 當輸入包含非法字符時，顯示「無效輸入」
+        calculationResult.textContent = '無效輸入';
+    }
 });
 
 // 頁面初始化

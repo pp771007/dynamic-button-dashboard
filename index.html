@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>動態按鈕控制板</title>
     <link rel="icon" href="favicon.ico">
-    <link rel="stylesheet" href="styles.css?5">
+    <link rel="stylesheet" href="styles.css?6">
 
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="動態按鈕控制板">
@@ -37,11 +37,19 @@
     </div>
     <div class="container top-padding" id="main-content"></div>
     <div class="container">
+        <div class="calculator-container">
+            <label>🧮 計算機：</label>
+            <input type="text" id="expressionInput" class="calculator-input" placeholder="輸入算式" autocomplete="off">
+            <label>=</label>
+            <span id="calculationResult" class="calculator-result">結果</span>
+        </div>
+    </div>
+    <div class="container">
         <label>🗒️ 記事本：</label>
         <textarea id="autosave-textarea"></textarea>
     </div>
 
-    <script src="script.js?7"></script>
+    <script src="script.js?8"></script>
 </body>
 
 </html>

@@ -6,7 +6,7 @@ body {
 }
 
 .container {
-    padding: 0 20px;
+    padding: 0 20px 10px 20px;
 }
 
 .top-padding {
@@ -208,4 +208,22 @@ button {
 .copy-url-btn:active {
     background-color: #2471a3;
     transform: scale(0.98);
+}
+
+.calculator-container {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.calculator-input {
+    width: 200px;
+    font-size: 18px;
+    padding: 8px;
+}
+
+.calculator-result {
+    font-size: 24px;
+    color: #00ffc6;
+    font-weight: bold;
 }
