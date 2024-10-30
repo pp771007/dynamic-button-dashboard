@@ -121,7 +121,7 @@ button {
 }
 
 .button-active {
-    background-color: green;
+    background-color: #00b500;
     color: #fff;
 }
 
@@ -214,12 +214,22 @@ button {
     display: flex;
     align-items: center;
     gap: 10px;
+    flex-wrap: nowrap;
+    width: 100%;
 }
 
 .calculator-input {
-    width: 200px;
+    flex: 1;
     font-size: 18px;
     padding: 8px;
+    min-width: 0;
+}
+
+/* 在寬度大於768px的螢幕上 */
+@media (min-width: 768px) {
+    .calculator-input {
+        max-width: 200px;
+    }
 }
 
 .calculator-result {
