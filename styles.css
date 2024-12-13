@@ -25,10 +25,6 @@ body {
     cursor: pointer;
 }
 
-.settings-btn:hover {
-    background-color: #666;
-}
-
 .settings-btn:active {
     background-color: #444;
     transform: scale(0.98);
@@ -111,10 +107,6 @@ button {
     cursor: pointer;
 }
 
-.button:hover {
-    background-color: #93ff85;
-}
-
 .button:active {
     background-color: #e0e0e0;
     transform: scale(0.98);
@@ -125,11 +117,6 @@ button {
     color: #fff;
 }
 
-.button-active:hover {
-    background-color: #004600;
-    color: #fff;
-}
-
 .reset-btn {
     background-color: #ff5252;
     padding: 5px 15px;
@@ -137,10 +124,6 @@ button {
     border: none;
     color: white;
     cursor: pointer;
-}
-
-.reset-btn:hover {
-    background-color: #ff6e6e;
 }
 
 .reset-btn:active {
@@ -160,10 +143,6 @@ button {
     cursor: pointer;
 }
 
-.reset-all-btn:hover {
-    background-color: #ff6e6e;
-}
-
 .reset-all-btn:active {
     background-color: #cc0000;
     transform: scale(0.98);
@@ -177,10 +156,6 @@ button {
     border: none;
     cursor: pointer;
     width: 100%;
-}
-
-.save-btn:hover {
-    background-color: #45a049;
 }
 
 .save-btn:active {
@@ -199,10 +174,6 @@ button {
     right: 20px;
     position: absolute;
     float: right;
-}
-
-.copy-url-btn:hover {
-    background-color: #2980b9;
 }
 
 .copy-url-btn:active {
