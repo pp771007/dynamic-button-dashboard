@@ -237,3 +237,19 @@ button {
     color: #00ffc6;
     font-weight: bold;
 }
+
+.toggle-section {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 10px;
+}
+
+.toggle-section label {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.toggle-section input[type="checkbox"] {
+    margin-right: 10px;
+}

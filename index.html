@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>動態按鈕控制板</title>
     <link rel="icon" href="favicon.ico">
-    <link rel="stylesheet" href="styles.css?7">
+    <link rel="stylesheet" href="styles.css?8">
 
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="動態按鈕控制板">
@@ -33,6 +33,14 @@
         <textarea id="title-list"></textarea>
         <label>🔘 按鈕列表：</label>
         <textarea id="button-list"></textarea>
+        <div class="toggle-section">
+            <label>
+                <input type="checkbox" id="show-calculator-toggle"> 顯示計算機
+            </label>
+            <label>
+                <input type="checkbox" id="show-notebook-toggle"> 顯示記事本
+            </label>
+        </div>
         <button id="save-settings" class="save-btn">💾 儲存設定</button>
     </div>
     <div class="container top-padding" id="main-content"></div>
@@ -49,7 +57,7 @@
         <textarea id="autosave-textarea"></textarea>
     </div>
 
-    <script src="script.js?8"></script>
+    <script src="script.js?9"></script>
 </body>
 
 </html>

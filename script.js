@@ -13,6 +13,10 @@ const resetAllBtn = document.getElementById('reset-all');
 const autoSaveTextarea = document.getElementById('autosave-textarea');
 const expressionInput = document.getElementById('expressionInput');
 const calculationResult = document.getElementById('calculationResult');
+const calculatorContainer = document.querySelector('.calculator-container');
+const notebookContainer = document.querySelector('#autosave-textarea').parentElement;
+const showCalculatorToggle = document.getElementById('show-calculator-toggle');
+const showNotebookToggle = document.getElementById('show-notebook-toggle');
 
 // 自動調整 textarea 高度
 function autoResizeTextarea(textarea) {
@@ -69,6 +73,16 @@ function loadSettings() {
     buttonListTextarea.value = localStorage.getItem('buttons') || '';
     autoSaveTextarea.value = localStorage.getItem('autosave-text') || '';
 
+    // 載入計算機和記事本的可見性設定
+    const isCalculatorVisible = localStorage.getItem('calculator-visible') === 'true';
+    const isNotebookVisible = localStorage.getItem('notebook-visible') === 'true';
+
+    showCalculatorToggle.checked = isCalculatorVisible;
+    showNotebookToggle.checked = isNotebookVisible;
+
+    calculatorContainer.style.display = isCalculatorVisible ? 'flex' : 'none';
+    notebookContainer.style.display = isNotebookVisible ? 'block' : 'none';
+
     autoResizeTextarea(autoSaveTextarea); // 調整高度
 }
 
@@ -89,6 +103,16 @@ function saveSettings() {
     localStorage.setItem('titles', titles);
     localStorage.setItem('buttons', buttons);
     localStorage.setItem('dynamic-button-dashboard-head-title', pageTitle);
+
+    // 儲存計算機和記事本的可見性設定
+    const isCalculatorVisible = showCalculatorToggle.checked;
+    const isNotebookVisible = showNotebookToggle.checked;
+
+    localStorage.setItem('calculator-visible', isCalculatorVisible);
+    localStorage.setItem('notebook-visible', isNotebookVisible);
+
+    calculatorContainer.style.display = isCalculatorVisible ? 'flex' : 'none';
+    notebookContainer.style.display = isNotebookVisible ? 'block' : 'none';
 
     // 強制更新網頁標題（兼容某些情況下瀏覽器不立即更新的問題）
     setTimeout(() => {
@@ -212,6 +236,17 @@ function applySettingsFromUrl() {
         if (settings.buttons) {
             buttonListTextarea.value = settings.buttons.join('\n');
         }
+
+        // 如果 URL 中有顯示設定，則套用
+        if (settings.calculatorVisible !== undefined) {
+            showCalculatorToggle.checked = settings.calculatorVisible;
+            calculatorContainer.style.display = settings.calculatorVisible ? 'flex' : 'none';
+        }
+        if (settings.notebookVisible !== undefined) {
+            showNotebookToggle.checked = settings.notebookVisible;
+            notebookContainer.style.display = settings.notebookVisible ? 'block' : 'none';
+        }
+
         renderSections();
 
         // 移除 URL 中的 settings 參數
@@ -227,7 +262,9 @@ function applySettingsFromUrl() {
 function copySettingsUrl() {
     const settings = {
         titles: titleListTextarea.value.split('\n').filter(title => title.trim() !== ''),
-        buttons: buttonListTextarea.value.split('\n').filter(button => button.trim() !== '')
+        buttons: buttonListTextarea.value.split('\n').filter(button => button.trim() !== ''),
+        calculatorVisible: showCalculatorToggle.checked,
+        notebookVisible: showNotebookToggle.checked
     };
     const encodedSettings = base64UrlEncode(JSON.stringify(settings));
     const settingsUrl = `${window.location.origin}${window.location.pathname}?settings=${encodedSettings}`;
