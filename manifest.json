@@ -1,0 +1,16 @@
+{
+  "name": "動態按鈕控制板",
+  "short_name": "控制板",
+  "start_url": ".",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#2196f3",
+  "description": "輕鬆自定義和管理你的按鈕控制面板，並能保存和分享你的設定。",
+  "icons": [
+    {
+      "src": "favicon.ico",
+      "sizes": "48x48 64x64 96x96 128x128 256x256",
+      "type": "image/x-icon"
+    }
+  ]
+}

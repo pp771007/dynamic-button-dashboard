@@ -7,6 +7,8 @@
     <title>動態按鈕控制板</title>
     <link rel="icon" href="favicon.ico">
     <link rel="stylesheet" href="styles.css?8">
+    <link rel="manifest" href="manifest.json">
+    <meta name="theme-color" content="#2196f3">
 
     <!-- Open Graph Meta Tags -->
     <meta property="og:title" content="動態按鈕控制板">
@@ -17,6 +19,13 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="動態按鈕控制板">
     <meta name="twitter:description" content="輕鬆自定義和管理你的按鈕控制面板，並能保存和分享你的設定。">
+    <script>
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', function() {
+          navigator.serviceWorker.register('sw.js');
+        });
+      }
+    </script>
 </head>
 
 <body>
