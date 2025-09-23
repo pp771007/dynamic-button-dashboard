@@ -1,3 +1,33 @@
+// ===== Toast 顯示函式 =====
+function showToast(msg) {
+    let toast = document.getElementById('custom-toast');
+    if (!toast) {
+        toast = document.createElement('div');
+        toast.id = 'custom-toast';
+        document.body.appendChild(toast);
+    }
+        toast.innerHTML = `<span class="toast-icon"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M5 13.5L10 18.5L19 7.5" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><span>${msg}</span>`;
+    toast.style.opacity = 1;
+    setTimeout(() => {
+        toast.style.opacity = 0;
+    }, 1200);
+}
+
+// ===== 綁定右鍵複製事件到所有動態按鈕 =====
+function bindButtonCopy() {
+    document.querySelectorAll('.button').forEach(btn => {
+        if (!btn._copyBinded) {
+            btn.addEventListener('contextmenu', function(e) {
+                e.preventDefault();
+                const text = btn.innerText || btn.textContent;
+                navigator.clipboard.writeText(text).then(() => {
+                    showToast('複製成功');
+                });
+            });
+            btn._copyBinded = true;
+        }
+    });
+}
 // 常數
 const defaultPageTitle = '動態按鈕控制板';
 
@@ -176,6 +206,8 @@ function renderSections() {
 
         mainContent.appendChild(sectionDiv);
     });
+    // 新增：渲染完按鈕後綁定右鍵複製
+    bindButtonCopy();
 }
 
 // 全部分區重置

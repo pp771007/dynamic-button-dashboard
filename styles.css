@@ -1,3 +1,26 @@
+/* ===== Toast for 複製成功 ===== */
+#custom-toast {
+    position: fixed;
+    bottom: 40px;
+    left: 50%;
+    transform: translateX(-50%);
+    background: rgba(60,60,60,0.95);
+    color: #fff;
+    padding: 10px 24px;
+    border-radius: 8px;
+    font-size: 1rem;
+    z-index: 9999;
+    transition: opacity 0.3s;
+    opacity: 0;
+    pointer-events: none;
+    display: flex;
+    align-items: center;
+}
+#custom-toast .toast-icon {
+    color: #4caf50;
+    font-size: 1.3em;
+    margin-right: 8px;
+}
 body {
     margin: 0;
     font-family: Arial, sans-serif;
