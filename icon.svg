@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+  <!-- 長方形按鈕 - 上半部白色 -->
+  <rect x="5" y="135" width="502" height="121" rx="20" ry="20" fill="#ffffff"/>
+  <rect x="5" y="236" width="502" height="20" fill="#ffffff"/>
+  
+  <!-- 長方形按鈕 - 下半部綠色 -->
+  <rect x="5" y="256" width="502" height="121" rx="20" ry="20" fill="#00b500"/>
+  <rect x="5" y="256" width="502" height="20" fill="#00b500"/>
+  
+  <!-- 黑色外框 -->
+  <rect x="5" y="135" width="502" height="242" rx="20" ry="20" fill="none" stroke="#000000" stroke-width="10"/>
+  
+  <!-- 加號 -->
+  <g fill="#1e1e1e">
+    <!-- 垂直線 -->
+    <rect x="226" y="186" width="60" height="140" rx="10" ry="10"/>
+    <!-- 水平線 -->
+    <rect x="176" y="236" width="160" height="40" rx="10" ry="10"/>
+  </g>
+</svg>
