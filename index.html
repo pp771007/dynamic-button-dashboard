@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>動態按鈕控制板</title>
     <link rel="icon" href="favicon.ico">
-    <link rel="stylesheet" href="styles.css?8">
+    <link rel="stylesheet" href="styles.css?11">
     <link rel="manifest" href="manifest.json">
     <meta name="theme-color" content="#2196f3">
 
@@ -19,10 +19,19 @@
     <meta name="twitter:card" content="summary">
     <meta name="twitter:title" content="動態按鈕控制板">
     <meta name="twitter:description" content="輕鬆自定義和管理你的按鈕控制面板，並能保存和分享你的設定。">
+    
+    <!-- PWA 基本支援 -->
     <script>
+      // Service Worker 註冊
       if ('serviceWorker' in navigator) {
         window.addEventListener('load', function() {
-          navigator.serviceWorker.register('sw.js');
+          navigator.serviceWorker.register('sw.js')
+            .then(registration => {
+              console.log('Service Worker 註冊成功:', registration.scope);
+            })
+            .catch(error => {
+              console.log('Service Worker 註冊失敗:', error);
+            });
         });
       }
     </script>
@@ -66,7 +75,7 @@
         <textarea id="autosave-textarea"></textarea>
     </div>
 
-    <script src="script.js?10"></script>
+    <script src="script.js?11"></script>
 </body>
 
 </html>
