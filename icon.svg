@@ -1,20 +1,58 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <!-- 長方形按鈕 - 上半部白色 -->
-  <rect x="5" y="135" width="502" height="121" rx="20" ry="20" fill="#ffffff"/>
-  <rect x="5" y="236" width="502" height="20" fill="#ffffff"/>
+  <defs>
+    <!-- 漸變定義 -->
+    <linearGradient id="bgGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#11998e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#38ef7d;stop-opacity:1" />
+    </linearGradient>
+    <linearGradient id="buttonGradient" x1="0%" y1="0%" x2="0%" y2="100%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#e8f5e9;stop-opacity:1" />
+    </linearGradient>
+    <radialGradient id="highlightGradient" cx="30%" cy="30%">
+      <stop offset="0%" style="stop-color:#ffffff;stop-opacity:0.3" />
+      <stop offset="100%" style="stop-color:#ffffff;stop-opacity:0" />
+    </radialGradient>
+    <!-- 陰影濾鏡 -->
+    <filter id="shadow" x="-50%" y="-50%" width="200%" height="200%">
+      <feGaussianBlur in="SourceAlpha" stdDeviation="8"/>
+      <feOffset dx="0" dy="4" result="offsetblur"/>
+      <feComponentTransfer>
+        <feFuncA type="linear" slope="0.3"/>
+      </feComponentTransfer>
+      <feMerge>
+        <feMergeNode/>
+        <feMergeNode in="SourceGraphic"/>
+      </feMerge>
+    </filter>
+  </defs>
   
-  <!-- 長方形按鈕 - 下半部綠色 -->
-  <rect x="5" y="256" width="502" height="121" rx="20" ry="20" fill="#00b500"/>
-  <rect x="5" y="256" width="502" height="20" fill="#00b500"/>
+  <!-- 圓形背景 -->
+  <circle cx="256" cy="256" r="256" fill="url(#bgGradient)"/>
   
-  <!-- 黑色外框 -->
-  <rect x="5" y="135" width="502" height="242" rx="20" ry="20" fill="none" stroke="#000000" stroke-width="10"/>
+  <!-- 高光效果 -->
+  <circle cx="256" cy="256" r="256" fill="url(#highlightGradient)"/>
   
-  <!-- 加號 -->
-  <g fill="#1e1e1e">
-    <!-- 垂直線 -->
-    <rect x="226" y="186" width="60" height="140" rx="10" ry="10"/>
-    <!-- 水平線 -->
-    <rect x="176" y="236" width="160" height="40" rx="10" ry="10"/>
+  <!-- 中央按鈕區域 -->
+  <g filter="url(#shadow)">
+    <!-- 按鈕背景圓 -->
+    <circle cx="256" cy="256" r="140" fill="url(#buttonGradient)"/>
+    
+    <!-- 按鈕邊框 -->
+    <circle cx="256" cy="256" r="140" fill="none" stroke="#00b500" stroke-width="6" opacity="0.5"/>
+    
+    <!-- 加號符號 -->
+    <g fill="#00b500">
+      <!-- 垂直線 -->
+      <rect x="241" y="196" width="30" height="120" rx="15" ry="15"/>
+      <!-- 水平線 -->
+      <rect x="196" y="241" width="120" height="30" rx="15" ry="15"/>
+    </g>
   </g>
+  
+  <!-- 裝飾性圓點 -->
+  <circle cx="150" cy="150" r="8" fill="#ffffff" opacity="0.6"/>
+  <circle cx="380" cy="140" r="6" fill="#ffffff" opacity="0.5"/>
+  <circle cx="140" cy="370" r="7" fill="#ffffff" opacity="0.5"/>
+  <circle cx="370" cy="360" r="9" fill="#ffffff" opacity="0.6"/>
 </svg>
