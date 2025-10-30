@@ -172,10 +172,17 @@ function renderSections() {
         resetBtn.classList.add('reset-btn');
         resetBtn.textContent = '♻️ 重置';
         resetBtn.addEventListener('click', () => {
+            // 清除視覺效果
             sectionDiv.querySelectorAll('.button').forEach((btn) => {
                 btn.classList.remove('button-active');
-                localStorage.removeItem(`button_${btn.dataset.section}_${btn.dataset.index}`);
             });
+            
+            // 清除該分區的所有 localStorage 資料
+            for (let key in localStorage) {
+                if (key.startsWith(`button_${sectionIndex}_`)) {
+                    localStorage.removeItem(key);
+                }
+            }
         });
 
         sectionHeader.appendChild(resetBtn);
@@ -212,10 +219,17 @@ function renderSections() {
 
 // 全部分區重置
 resetAllBtn.addEventListener('click', () => {
+    // 清除視覺效果
     document.querySelectorAll('.button').forEach(button => {
         button.classList.remove('button-active');
-        localStorage.removeItem(`button_${button.dataset.section}_${button.dataset.index}`);
     });
+    
+    // 清除所有按鈕的 localStorage 資料
+    for (let key in localStorage) {
+        if (key.startsWith('button_')) {
+            localStorage.removeItem(key);
+        }
+    }
 });
 
 // UTF-8 to Base64 URL Encode
