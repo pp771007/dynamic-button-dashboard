@@ -1,8 +1,8 @@
 {
   "name": "動態按鈕控制板",
   "short_name": "控制板",
-  "start_url": "/",
-  "scope": "/",
+  "start_url": "/dynamic-button-dashboard/",
+  "scope": "/dynamic-button-dashboard/",
   "display": "standalone",
   "background_color": "#ffffff",
   "theme_color": "#2196f3",
